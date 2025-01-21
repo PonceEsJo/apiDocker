@@ -1,0 +1,12 @@
+FROM mysql:8.0
+
+# Establecer la contraseña para el usuario root y la base de datos predeterminada
+ENV MYSQL_ROOT_PASSWORD=admi
+ENV MYSQL_DATABASE=apiDocker
+
+# Copiar el script de inicialización
+COPY ./init.sql /docker-entrypoint-initdb.d/
+
+# Exponer el puerto de MySQL
+EXPOSE 3306
+
