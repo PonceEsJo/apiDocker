@@ -47,21 +47,24 @@ async function obtenerUsuarios() {
     if (response.ok) {
       const usuarios = await response.json();
 
-      // Selecciona el cuerpo de la tabla
-      const tablaCuerpo = document.getElementById("tabla-usuarios-cuerpo");
-      tablaCuerpo.innerHTML = ""; // Limpia la tabla antes de agregar los datos
+      // Verifica si la tabla existe antes de intentar modificarla
+      const tablaCuerpo = document.getElementById("usuariosTable")?.getElementsByTagName("tbody")[0];
+      if (tablaCuerpo) {
+        tablaCuerpo.innerHTML = ""; // Limpia la tabla antes de agregar los datos
 
-      usuarios.forEach((usuario) => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-          <td>${usuario.id}</td>
-          <td>${usuario.nombre}</td>
-          <td>${usuario.apellidos}</td>
-          <td>${usuario.telefono}</td>
-          <td>${usuario.usuario}</td>
-        `;
-        tablaCuerpo.appendChild(fila);
-      });
+        usuarios.forEach((usuario) => {
+          const fila = document.createElement("tr");
+          fila.innerHTML = `
+            <td>${usuario.nombre}</td>
+            <td>${usuario.apellidos}</td>
+            <td>${usuario.telefono}</td>
+            <td>${usuario.usuario}</td>
+          `;
+          tablaCuerpo.appendChild(fila);
+        });
+      } else {
+        console.error("No se encontró el cuerpo de la tabla.");
+      }
     } else {
       alert("Error al obtener la lista de usuarios");
     }

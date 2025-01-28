@@ -8,13 +8,12 @@ services:
       - "3306:3306"  # Exponer el puerto 3306 de MySQL al puerto 3306 en tu máquina host
     volumes:
       - mysql-data:/var/lib/mysql  # Volumen persistente para los datos de la base de datos
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql  # Script de inicialización
     networks:
       - app-network
 
   backend:
     build: ./backend  # La carpeta de tu backend
-    container_name: backend
+    container_name: backend-container
     ports:
       - "8080:8080"
     depends_on:
@@ -28,7 +27,7 @@ services:
 
   frontend:
     build: ./frontend  # La carpeta de tu frontend
-    container_name: frontend
+    container_name: frontend-container
     ports:
       - "5500:80"  # Mapear el puerto 80 del contenedor al puerto 5500 del host
     depends_on:
